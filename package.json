@@ -1,0 +1,35 @@
+{
+  "name": "@typespec/changelog",
+  "version": "0.1.0",
+  "author": "Heath Stewart",
+  "description": "TypeSpec library to emit CHANGELOG entries.",
+  "license": "MIT",
+  "keywords": [
+    "typespec"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "dist/**",
+    "!dist/test/**"
+  ],
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . --watch",
+    "lint": "eslint . --ext .ts --max-warnings=0",
+    "lint:fix": "eslint . --fix --ext .ts"
+  },
+  "peerDependencies": {
+    "@typespec/compiler": "^0.47.1",
+    "@typespec/http": "^0.47.0",
+    "@typespec/versioning": "^0.47.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.7",
+    "eslint": "^8.48.0",
+    "typescript": "^5.2.2"
+  }
+}
