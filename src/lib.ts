@@ -50,18 +50,18 @@ export const $lib = createTypeSpecLibrary({
         default: paramMessage`Ignoring additional service namespace '${"ns"}'.`,
       },
     },
-    "single-version": {
-      severity: "warning",
-      messages: {
-        default: "Skipping CHANGELOG with only single version."
-      },
-    },
     "namespace-undefined": {
       severity: "error",
       messages: {
         default: paramMessage`Version '${"version"}' not defined.`
       }
-    }
+    },
+    "invalid-selection": {
+      severity: "warning",
+      messages: {
+        default: "Skipping CHANGELOG with only a single version selected."
+      },
+    },
   },
   emitter: {
     options: EmitterOptionsSchema as JSONSchemaType<CHANGELOGEmitterOptions>,

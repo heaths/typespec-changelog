@@ -9,11 +9,7 @@ const defaultOptions: CHANGELOGEmitterOptions = {
 
 export async function $onEmit(context: EmitContext<CHANGELOGEmitterOptions>) {
   const options = resolveOptions(context);
-  if (options.fromVersion === options.toVersion) {
-    reportDiagnostic(context.program, {
-      code: "single-version",
-      target: options.namespace,
-    });
+  if (options === undefined) {
     return;
   }
   console.log(options);
@@ -21,12 +17,11 @@ export async function $onEmit(context: EmitContext<CHANGELOGEmitterOptions>) {
 
 interface CHANGELOGEmitterConfiguration {
   outputFile: string;
-  fromVersion: string;
-  toVersion: string;
+  versions: string[];
   namespace: Namespace;
 }
 
-function resolveOptions(context: EmitContext<CHANGELOGEmitterOptions>): CHANGELOGEmitterConfiguration {
+function resolveOptions(context: EmitContext<CHANGELOGEmitterOptions>): CHANGELOGEmitterConfiguration | undefined {
   const resolvedOptions = { ...defaultOptions, ...context.options };
   const [services] = getAllHttpServices(context.program);
   const service = services.shift();
@@ -46,25 +41,55 @@ function resolveOptions(context: EmitContext<CHANGELOGEmitterOptions>): CHANGELO
     .map((v) => v.value)
     .sort((a, b) => a.localeCompare(b));
 
-  let fromVersion = resolvedOptions.from;
-  let toVersion = resolvedOptions.to;
-  const checkDefined = (ver?: string): string | undefined => {
-    if (ver && !versions.some((v) => v === ver)) {
+  let hasError = false;
+  const indexOf = (ver: string | undefined, index?: number): number | undefined => {
+    if (!ver) {
+      return index;
+    }
+
+    let idx = versions.indexOf(ver);
+    if (idx < 0) {
       reportDiagnostic(context.program, {
         code: "namespace-undefined",
         target: service.namespace,
         format: {
           version: ver,
         },
-      })
+      });
+      hasError = true;
+      return undefined;
     }
-    return ver;
+
+    return idx;
+  }
+
+  let fromVersion = indexOf(resolvedOptions.from, 0);
+  if (hasError) {
+    return undefined;
+  }
+
+  let toVersion = indexOf(resolvedOptions.to);
+  if (hasError) {
+    return undefined;
+  }
+
+  if (toVersion !== undefined) {
+    // Array.slice is exclusive of end, so increment end.
+    toVersion++;
+  }
+
+  const selected = versions.slice(fromVersion, toVersion);
+  if (selected.length <= 1) {
+    reportDiagnostic(context.program, {
+      code: "invalid-selection",
+      target: ns,
+    });
+    return undefined;
   }
 
   return {
     outputFile: resolvePath(context.emitterOutputDir, resolvedOptions["output-file"]),
-    fromVersion: checkDefined(fromVersion) || versions.at(0)!,
-    toVersion: checkDefined(toVersion) || versions.at(-1)!,
+    versions: selected,
     namespace: ns,
   };
 }
