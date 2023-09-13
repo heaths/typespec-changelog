@@ -8,7 +8,7 @@
     "typespec"
   ],
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "engines": {
     "node": ">=16.0.0"
   },
@@ -22,7 +22,7 @@
     "lint": "eslint . --ext .ts --max-warnings=0",
     "lint:fix": "eslint . --fix --ext .ts",
     "test": "mocha",
-    "test:compile": "tsp compile --emit @typespec/changelog ./src/test/in/main.tsp"
+    "test:compile": "tsp compile --emit @typespec/changelog ./test/in/main.tsp"
   },
   "peerDependencies": {
     "@typespec/compiler": "^0.47.1",

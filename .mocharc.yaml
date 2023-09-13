@@ -1,5 +1,5 @@
 reporter: mocha-multi-reporters
-spec: "dist/test/**/*.test.js"
+spec: "dist/test/**/*.js"
 
 # https://www.npmjs.com/package/mocha-multi-reporters
 reporterOptions: "configFile=mocha.reporter.config.json"

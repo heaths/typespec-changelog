@@ -23,13 +23,13 @@
     },
     {
       "type": "npm",
-      "script": "test:compile",
+      "script": "test",
       "group": {
         "kind": "test",
         "isDefault": true
       },
-      "label": "test:compile",
-      "detail": "tsp compile --emit @typespec/changelog ./src/test/in/main.tsp"
+      "label": "test",
+      "detail": "mocha"
     }
   ]
 }
