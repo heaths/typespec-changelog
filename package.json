@@ -20,7 +20,9 @@
     "build": "tsc -p .",
     "watch": "tsc -p . --watch",
     "lint": "eslint . --ext .ts --max-warnings=0",
-    "lint:fix": "eslint . --fix --ext .ts"
+    "lint:fix": "eslint . --fix --ext .ts",
+    "test": "mocha",
+    "test:compile": "tsp compile --emit @typespec/changelog ./src/test/in/main.tsp"
   },
   "peerDependencies": {
     "@typespec/compiler": "^0.47.1",
@@ -28,8 +30,12 @@
     "@typespec/versioning": "^0.47.0"
   },
   "devDependencies": {
+    "@types/mocha": "^10.0.1",
     "@types/node": "^20.5.7",
     "eslint": "^8.48.0",
+    "mocha": "^10.2.0",
+    "mocha-junit-reporter": "^2.2.1",
+    "mocha-multi-reporters": "^1.5.1",
     "typescript": "^5.2.2"
   }
 }

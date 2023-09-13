@@ -3,21 +3,11 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "build",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "problemMatcher": [],
-      "label": "build",
-      "detail": "tsc -p ."
-    },
-    {
-      "type": "npm",
       "script": "watch",
       "isBackground": true,
       "group": {
-        "kind": "build"
+        "kind": "build",
+        "isDefault": true
       },
       "problemMatcher": [
         {
@@ -30,6 +20,16 @@
       ],
       "label": "watch",
       "detail": "tsc -p . --watch"
+    },
+    {
+      "type": "npm",
+      "script": "test:compile",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "label": "test:compile",
+      "detail": "tsp compile --emit @typespec/changelog ./src/test/in/main.tsp"
     }
   ]
 }

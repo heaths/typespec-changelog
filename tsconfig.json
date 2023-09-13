@@ -10,10 +10,6 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2019",
-    "types": ["node"]
-  },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ]
+    "types": ["node", "mocha"]
+  }
 }
